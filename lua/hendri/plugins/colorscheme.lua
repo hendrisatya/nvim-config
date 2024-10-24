@@ -13,38 +13,36 @@ return {
             local fg_gutter = "#627E97"
             local border = "#547998"
 
-            require("tokyonight").setup({
-                style = "night",
-                on_colors = function(colors)
-                    colors.bg = bg
-                    colors.bg_dark = bg_dark
-                    colors.bg_float = bg_dark
-                    colors.bg_highlight = bg_highlight
-                    colors.bg_popup = bg_dark
-                    colors.bg_search = bg_search
-                    colors.bg_sidebar = bg_dark
-                    colors.bg_statusline = bg_dark
-                    colors.bg_visual = bg_visual
-                    colors.border = border
-                    colors.fg = fg
-                    colors.fg_dark = fg_dark
-                    colors.fg_float = fg
-                    colors.fg_gutter = fg_gutter
-                    colors.fg_sidebar = fg_dark
-                end,
-            })
-            -- load the colorscheme here
-            vim.cmd([[colorscheme tokyonight]])
+            local function apply_colorscheme()
+                require("tokyonight").setup({
+                    style = "night",
+                    on_colors = function(colors)
+                        colors.bg = bg
+                        colors.bg_dark = bg_dark
+                        colors.bg_float = bg_dark
+                        colors.bg_highlight = bg_highlight
+                        colors.bg_popup = bg_dark
+                        colors.bg_search = bg_search
+                        colors.bg_sidebar = bg_dark
+                        colors.bg_statusline = bg_dark
+                        colors.bg_visual = bg_visual
+                        colors.border = border
+                        colors.fg = fg
+                        colors.fg_dark = fg_dark
+                        colors.fg_float = fg_dark
+                        colors.fg_gutter = fg_gutter
+                        colors.fg_sidebar = fg_dark
+                    end,
+                })
+                -- load the colorscheme here
+                vim.cmd([[colorscheme tokyonight]])
+            end
 
-            vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-            vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" }) -- Non-current window
-            vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" }) -- For signs like diagnostics
-            vim.api.nvim_set_hl(0, "WinSeparator", { bg = "none" }) -- For window separators (splits)
-            vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
-            vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { bg = "none" })
-            vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
-            vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none" })
-            vim.api.nvim_set_hl(0, "TelescopePromptPrefix", { bg = "none" })
+            -- Call the function initially to set the colorscheme on startup
+            apply_colorscheme()
+
+            -- Create a command to reapply the colorscheme
+            vim.api.nvim_create_user_command("ReloadColorscheme", apply_colorscheme, {})
         end,
     },
 }
